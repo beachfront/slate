@@ -1,0 +1,562 @@
+---
+title: API Reference
+
+language_tabs: # must be one of https://git.io/vQNgJ
+  - shell
+  - python
+  - java
+
+toc_footers:
+  - <a href='https://access.beachfront.io/'>Sign up for Developer Keys</a>
+
+includes:
+  - errors
+
+search: true
+
+code_clipboard: true
+---
+
+# Introduction
+
+Welcome to Beachfront Reporting API Documentation!
+
+We have language bindings in Shell, Python, and Java!
+
+# Authentication
+
+Beachfront uses Basic Auth Token(BAT) to allow access to the Reporting API.
+
+1. Get your API key and secret [here](https://access.beachfront.io/).
+2. You can generate BAT using API key and secret [here](https://www.blitter.se/utils/basic-authentication-header-generator).
+3. For API requests, please include BAT in the header like: `Authorization: Basic meowmeow`
+
+<aside class="notice">
+You must replace <code>meowmeow</code> with your basic authentication token.
+</aside>
+
+# Reporting API
+
+## Summarized Data
+
+```shell
+printf '{
+	"range": "month2date",
+	"startDate": "2021-01-01T21:28:55.187Z",
+	"endDate": "2021-06-01T21:28:55.187Z",
+	"dimensions": [
+		"day",
+		"clvDeal"
+	],
+	"measures": [
+		"revenuegross",
+		"resellerRevenue",
+		"impressions",
+		"adrequests",
+		"totalBidPlaced"
+	],
+	"conditions": [{
+		"dimension": "clvDeal",
+		"operation": "in",
+		"value": [
+			"6059f32792f87150079cd912",
+			"6059f3d792f87150079cd918",
+			"60671c6e92f8716266a96c01",
+			"60671cbc92f8716266a96c04"
+		]
+	}]
+}'| http  --follow --timeout 3600 POST 'http://localhost:8085/api/reportingapi/summary' \
+ Authorization:'Basic meowmeow' \
+ Content-Type:'application/json'
+```
+
+```python
+import requests
+import json
+
+url = "http://localhost:8085/api/reportingapi/summary"
+
+payload = json.dumps({
+  "range": "month2date",
+  "startDate": "2021-01-01T21:28:55.187Z",
+  "endDate": "2021-06-01T21:28:55.187Z",
+  "dimensions": [
+    "day",
+    "clvDeal"
+  ],
+  "measures": [
+    "revenuegross",
+    "resellerRevenue",
+    "impressions",
+    "adrequests",
+    "totalBidPlaced"
+  ],
+  "conditions": [
+    {
+      "dimension": "clvDeal",
+      "operation": "in",
+      "value": [
+        "6059f32792f87150079cd912",
+        "6059f3d792f87150079cd918",
+        "60671c6e92f8716266a96c01",
+        "60671cbc92f8716266a96c04"
+      ]
+    }
+  ]
+})
+headers = {
+  'Authorization': 'Basic meowmeow',
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse("application/json");
+RequestBody body = RequestBody.create(mediaType, "{\n\t\"range\": \"month2date\",\n\t\"startDate\": \"2021-01-01T21:28:55.187Z\",\n\t\"endDate\": \"2021-06-01T21:28:55.187Z\",\n\t\"dimensions\": [\n\t\t\"day\",\n\t\t\"clvDeal\"\n\t],\n\t\"measures\": [\n\t\t\"revenuegross\",\n\t\t\"resellerRevenue\",\n\t\t\"impressions\",\n\t\t\"adrequests\",\n\t\t\"totalBidPlaced\"\n\t],\n\t\"conditions\": [{\n\t\t\"dimension\": \"clvDeal\",\n\t\t\"operation\": \"in\",\n\t\t\"value\": [\n\t\t\t\"6059f32792f87150079cd912\",\n\t\t\t\"6059f3d792f87150079cd918\",\n\t\t\t\"60671c6e92f8716266a96c01\",\n\t\t\t\"60671cbc92f8716266a96c04\"\n\t\t]\n\t}]\n}");
+Request request = new Request.Builder()
+  .url("http://localhost:8085/api/reportingapi/summary")
+  .method("POST", body)
+  .addHeader("Authorization", "Basic meowmeow")
+  .addHeader("Content-Type", "application/json")
+  .build();
+Response response = client.newCall(request).execute();
+```
+
+> The above command returns JSON structured like this:
+
+```json
+[
+    "Summary",
+    343.85626,
+    103.21045,
+    21365,
+    2241379477,
+    207505
+]
+```
+
+This endpoint retrieves summary data in the format - "Summary, first measure data, second measure data and so on"
+
+### HTTP Request
+
+`POST http://localhost:8085/api/reportingapi/summary`
+
+### Body Parameters
+
+Parameter |  Description
+--------- | -----------
+range | One of today, yesterday, last7day, last14day, last30day, month2date, lastmonth, custom, last15day.
+startDate | Starting date
+endDate | Ending date
+dimensions | List of dimensions
+measures | List of measures
+conditions | Filters
+
+<!--aside class="success">
+Remember — a happy kitten is an authenticated kitten!
+</aside-->
+
+## Detailed Data
+
+```shell
+printf '{
+	"range": "month2date",
+	"startDate": "2021-01-01T21:28:55.187Z",
+	"endDate": "2021-06-01T21:28:55.187Z",
+	"dimensions": [
+		"day",
+		"clvDeal"
+	],
+	"measures": [
+		"revenuegross",
+		"resellerRevenue",
+		"impressions",
+		"adrequests",
+		"totalBidPlaced"
+	],
+	"conditions": [{
+		"dimension": "clvDeal",
+		"operation": "in",
+		"value": [
+			"6059f32792f87150079cd912",
+			"6059f3d792f87150079cd918",
+			"60671c6e92f8716266a96c01",
+			"60671cbc92f8716266a96c04"
+		]
+	}]
+}'| http  --follow --timeout 3600 POST 'http://localhost:8085/api/reportingapi/detail' \
+ Authorization:'Basic meowmeow' \
+ Content-Type:'application/json'
+```
+
+```python
+import http.client
+import json
+
+conn = http.client.HTTPSConnection("localhost", 8085)
+payload = json.dumps({
+  "range": "month2date",
+  "startDate": "2021-01-01T21:28:55.187Z",
+  "endDate": "2021-06-01T21:28:55.187Z",
+  "dimensions": [
+    "day",
+    "clvDeal"
+  ],
+  "measures": [
+    "revenuegross",
+    "resellerRevenue",
+    "impressions",
+    "adrequests",
+    "totalBidPlaced"
+  ],
+  "conditions": [
+    {
+      "dimension": "clvDeal",
+      "operation": "in",
+      "value": [
+        "6059f32792f87150079cd912",
+        "6059f3d792f87150079cd918",
+        "60671c6e92f8716266a96c01",
+        "60671cbc92f8716266a96c04"
+      ]
+    }
+  ]
+})
+headers = {
+  'Authorization': 'Basic meowmeow',
+  'Content-Type': 'application/json'
+}
+conn.request("POST", "/api/reportingapi/detail", payload, headers)
+res = conn.getresponse()
+data = res.read()
+print(data.decode("utf-8"))
+```
+
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse("application/json");
+RequestBody body = RequestBody.create(mediaType, "{\n\t\"range\": \"month2date\",\n\t\"startDate\": \"2021-01-01T21:28:55.187Z\",\n\t\"endDate\": \"2021-06-01T21:28:55.187Z\",\n\t\"dimensions\": [\n\t\t\"day\",\n\t\t\"clvDeal\"\n\t],\n\t\"measures\": [\n\t\t\"revenuegross\",\n\t\t\"resellerRevenue\",\n\t\t\"impressions\",\n\t\t\"adrequests\",\n\t\t\"totalBidPlaced\"\n\t],\n\t\"conditions\": [{\n\t\t\"dimension\": \"clvDeal\",\n\t\t\"operation\": \"in\",\n\t\t\"value\": [\n\t\t\t\"6059f32792f87150079cd912\",\n\t\t\t\"6059f3d792f87150079cd918\",\n\t\t\t\"60671c6e92f8716266a96c01\",\n\t\t\t\"60671cbc92f8716266a96c04\"\n\t\t]\n\t}]\n}");
+Request request = new Request.Builder()
+  .url("http://localhost:8085/api/reportingapi/detail")
+  .method("POST", body)
+  .addHeader("Authorization", "Basic meowmeow")
+  .addHeader("Content-Type", "application/json")
+  .build();
+Response response = client.newCall(request).execute();
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "msg": null,
+    "success": true,
+    "value": null,
+    "rc": 28,
+    "title": null,
+    "columns": [
+        {
+            "key": "day",
+            "title": "DAY",
+            "type": "DATE",
+            "prefix": null,
+            "suffix": null
+        },
+        {
+            "key": "clvDeal",
+            "title": "DEAL",
+            "type": "STRING",
+            "prefix": null,
+            "suffix": null
+        },
+        {
+            "key": "revenuegross",
+            "title": "SPEND",
+            "type": "DOUBLE",
+            "prefix": "$",
+            "suffix": null
+        },
+        {
+            "key": "resellerRevenue",
+            "title": "REVENUE",
+            "type": "DOUBLE",
+            "prefix": "$",
+            "suffix": null
+        },
+        {
+            "key": "impressions",
+            "title": "IMPRESSIONS",
+            "type": "NUMBER",
+            "prefix": null,
+            "suffix": null
+        },
+        {
+            "key": "adrequests",
+            "title": "AUCTIONS",
+            "type": "NUMBER",
+            "prefix": null,
+            "suffix": null
+        },
+        {
+            "key": "totalBidPlaced",
+            "title": "BID PLACED",
+            "type": "NUMBER",
+            "prefix": null,
+            "suffix": null
+        }
+    ],
+    "rows": [
+        [
+            "2-Jun-2021",
+            "DealNameOne",
+            30.640728,
+            9.192219,
+            1808,
+            41630132,
+            21467
+        ],
+        [
+            "2-Jun-2021",
+            "DealNameTwo",
+            20.866302,
+            6.2598915,
+            1232,
+            15295795,
+            15558
+        ]
+    ]
+}
+```
+
+This endpoint retrieves detailed data.
+
+<!--
+<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+-->
+
+### HTTP Request
+
+`POST http://localhost:8085/api/reportingapi/detail`
+
+### Body Parameters
+
+Parameter |  Description
+--------- | -----------
+range | One of today, yesterday, last7day, last14day, last30day, month2date, lastmonth, custom, last15day.
+startDate | Starting date
+endDate | Ending date
+dimensions | List of dimensions
+measures | List of measures
+conditions | Filters
+
+# Media Plan API
+
+## Get media plan by id
+
+```shell
+http  --follow --timeout 3600 GET 'http://localhost:8085/api/mediaplanapi/get/60ad0b6e92f8713502143509' \
+ Authorization:'Basic meowmeow'
+```
+
+```python
+import requests
+
+url = "http://localhost:8085/api/mediaplanapi/get/60ad0b6e92f8713502143509"
+
+payload = ""
+headers = {
+  'Authorization': 'Basic meowmeow'
+}
+
+response = requests.request("GET", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+Request request = new Request.Builder()
+  .url("http://localhost:8085/api/mediaplanapi/get/60ad0b6e92f8713502143509")
+  .method("GET", null)
+  .addHeader("Authorization", "Basic meowmeow")
+  .build();
+Response response = client.newCall(request).execute();
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": "60ad0b6e92f8713502143509",
+    "title": "Base Ball Audience",
+    "status": true,
+    "includeSegments": [
+        {
+            "id": "3830",
+            "type": "RDS",
+            "title": "BASE_BALL_A273-31",
+            "source": 0,
+            "price": null,
+            "provider": "Sample Provider",
+            "users": 5431221812
+        }
+    ],
+    "excludeSegments": [],
+    "platform": [
+        "CTV"
+    ],
+    "country": [
+        {
+            "key": "US",
+            "name": "United States of America",
+            "avl": false,
+            "dmaCode": null
+        }
+    ],
+    "app": [],
+    "state": [],
+    "dma": [],
+    "zipcode": [],
+    "publishers": [],
+    "domains": [],
+    "applications": [],
+    "category": [],
+    "genres": [],
+    "iabCategory": [],
+    "domainMedia": null,
+    "bundleMedia": null,
+    "zipMedia": null,
+    "mediaType": "video",
+    "cpm": 0.0,
+    "pdf": true,
+    "desc": null,
+    "featured": false,
+    "icon": null,
+    "excludeCountry": false,
+    "excludeDma": false,
+    "excludeState": false,
+    "excludeUserId": false,
+    "excludeiabCat": false,
+    "excludeGenres": false,
+    "excludeApp": false
+}
+```
+
+This endpoint retrieves media plan data.
+
+<!--
+<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+-->
+
+### HTTP Request
+
+`GET http://localhost:8085/api/mediaplanapi/get/60ad0b6e92f8713502143509`
+
+### Query Parameters
+
+Parameter |  Description
+--------- | -----------
+id | media plan id
+
+## Get all media plans
+
+```shell
+printf '{
+    "pagination": {
+        "number": 50,
+        "numberOfPages": 0
+    }
+}'| http  --follow --timeout 3600 POST 'http://localhost:8085/api/mediaplanapi/all' \
+ Authorization:'Basic meowmeow' \
+ Content-Type:'application/json'
+```
+
+```python
+import requests
+import json
+
+url = "http://localhost:8085/api/mediaplanapi/all"
+
+payload = json.dumps({
+  "pagination": {
+    "number": 50,
+    "numberOfPages": 0
+  }
+})
+headers = {
+  'Authorization': 'Basic meowmeow',
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse("application/json");
+RequestBody body = RequestBody.create(mediaType, "{\n    \"pagination\": {\n        \"number\": 50,\n        \"numberOfPages\": 0\n    }\n}");
+Request request = new Request.Builder()
+  .url("http://localhost:8085/api/mediaplanapi/all")
+  .method("POST", body)
+  .addHeader("Authorization", "Basic QlJuYzNnR0hEZVEzTWgwZjpkeUJPMlRaSDFvUUNDM0VnSU55WTQxOFFjclFFbFp0Mw==")
+  .addHeader("Content-Type", "application/json")
+  .build();
+Response response = client.newCall(request).execute();
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "columns": [
+        "Name",
+        "Deals Attached",
+        "Status",
+        "Created",
+        "Updated"
+    ],
+    "rows": [
+        {
+            "name": "Multi Culture Audience",
+            "dealsAttached": 1,
+            "status": "ENABLED",
+            "created": 1621953390246,
+            "updated": 1622053211858
+        },
+        {
+            "name": "...",
+            "dealsAttached": 1,
+            "status": "ENABLED",
+            "created": 1621953335033,
+            "updated": null
+        }
+    ]
+}
+```
+
+This endpoint retrieves all media plans.
+
+<!--
+<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+-->
+
+### HTTP Request
+
+`POST http://localhost:8085/api/mediaplanapi/all`
+
+### Body Parameters
+
+Parameter  | Example                                | Description                                                                   |
+---------- | -------------------------------------- | ------------------------------------------------------------------------------|
+pagination | <code>{<br>&nbsp;&nbsp;&nbsp;&nbsp;"pagination": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"number": 50,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"numberOfPages": 0<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}</code>| Get the number of records you desire, increment numberOfPages for the next set|
