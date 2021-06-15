@@ -507,7 +507,7 @@ RequestBody body = RequestBody.create(mediaType, "{\n    \"pagination\": {\n    
 Request request = new Request.Builder()
   .url("https://access.beachfront.io/api/mediaplanapi/all")
   .method("POST", body)
-  .addHeader("Authorization", "Basic QlJuYzNnR0hEZVEzTWgwZjpkeUJPMlRaSDFvUUNDM0VnSU55WTQxOFFjclFFbFp0Mw==")
+  .addHeader("Authorization", "Basic meowmeow")
   .addHeader("Content-Type", "application/json")
   .build();
 Response response = client.newCall(request).execute();
@@ -558,3 +558,239 @@ This endpoint retrieves all media plans.
 Parameter  | Description                            | Example                                                                       |
 ---------- | -------------------------------------- | ------------------------------------------------------------------------------|
 pagination | Get the number of records you desire, increment numberOfPages for the next set| <code>{<br>&nbsp;&nbsp;&nbsp;&nbsp;"pagination": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"number": 50,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"numberOfPages": 0<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}</code> |
+
+# Deals API
+
+## Get deal by id
+
+```shell
+http  --follow --timeout 3600 GET 'https://access.beachfront.io/api/dealapi/get/713502143509' \
+ Authorization:'Basic meowmeow'
+```
+
+```python
+import requests
+
+url = "https://access.beachfront.io/api/dealapi/get/713502143509"
+
+payload = ""
+headers = {
+  'Authorization': 'Basic meowmeow'
+}
+
+response = requests.request("GET", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+Request request = new Request.Builder()
+  .url("https://access.beachfront.io/api/mediaplanapi/get/713502143509")
+  .method("GET", null)
+  .addHeader("Authorization", "Basic meowmeow")
+  .build();
+Response response = client.newCall(request).execute();
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "id": "60ad0dec92f8713502143516",
+    "title": "Audigent & Beachfront - CTV Smart PMP - Multicultural 21-35",
+    "adType": "DEAL",
+    "type": "AUCTION",
+    "rate": 6.0,
+    "dealId": "AUD80",
+    "seat": "1767832",
+    "dealDspId": "5f3bd9305692bd0a56a6b36d",
+    "createTime": null,
+    "lastUpdate": null,
+    "budgetType": "OPEN",
+    "budget": null,
+    "frequencyType": "UNLIMITED",
+    "frequency": null,
+    "deliveryType": "CONTINUE",
+    "startDate": null,
+    "endDate": null,
+    "dealStatus": "PUBLISHED",
+    "mediaCount": 0,
+    "marginType": "PERCENTAGE",
+    "marginValue": 30.0,
+    "marginValueString": null,
+    "mediaPlans": "60ad0b6e92f8713502143509",
+    "selectedDsp": {
+        "key": "5f3bd9305692bd0a56a6b36d",
+        "name": "DV360",
+        "avl": true,
+        "dmaCode": null
+    },
+    "selectedPubDsp": null,
+    "selectedMedia": {
+        "key": "60ad0b6e92f8713502143509",
+        "name": "Multi Culture Audience",
+        "avl": false,
+        "dmaCode": null
+    },
+    "audienceIp": "on",
+    "audienceIfa": true,
+    "location": "on",
+    "zipcode": true,
+    "contentNetwork": true,
+    "contentSeries": true,
+    "contentSeason": true,
+    "contentEpisode": true,
+    "contentTitle": true,
+    "contentChannel": true,
+    "pubSeats": []
+}
+```
+
+This endpoint retrieves deal data.
+
+<!--
+<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+-->
+
+### HTTP Request
+
+`GET https://access.beachfront.io/api/dealapi/get/713502143509`
+
+### Query Parameters
+
+Parameter |  Description
+--------- | -----------
+id | deal id
+
+## Get all deals
+
+```shell
+printf '{
+    "range": "today",
+	  "startDate": "2021-06-14",
+	  "endDate": "2021-06-14",
+    "pagination": {
+        "number": 50,
+        "numberOfPages": 0
+    }
+}'| http  --follow --timeout 3600 POST 'https://access.beachfront.io/api/dealapi/all' \
+ Authorization:'Basic meowmeow' \
+ Content-Type:'application/json'
+```
+
+```python
+import requests
+import json
+
+url = "https://access.beachfront.io/api/dealapi/all"
+
+payload = json.dumps({
+  "range": "today",
+	"startDate": "2021-06-14",
+	"endDate": "2021-06-14",
+  "pagination": {
+    "number": 50,
+    "numberOfPages": 0
+  }
+})
+headers = {
+  'Authorization': 'Basic meowmeow',
+  'Content-Type': 'application/json'
+}
+
+response = requests.request("POST", url, headers=headers, data=payload)
+
+print(response.text)
+```
+
+```java
+OkHttpClient client = new OkHttpClient().newBuilder()
+  .build();
+MediaType mediaType = MediaType.parse("application/json");
+RequestBody body = RequestBody.create(mediaType, "{\n    \"range\": \"today\",\n\t\"startDate\": \"2021-06-14\",\n\t\"endDate\": \"2021-06-14\",\n    \"pagination\": {\n        \"number\": 50,\n        \"numberOfPages\": 1\n    }\n}");
+Request request = new Request.Builder()
+  .url("https://access.beachfront.io/api/mediaplanapi/all")
+  .method("POST", body)
+  .addHeader("Authorization", "Basic meowmeow")
+  .addHeader("Content-Type", "application/json")
+  .build();
+Response response = client.newCall(request).execute();
+```
+
+> The above command returns JSON structured like this:
+
+```json
+{
+    "columns": [
+        "Name",
+        "Deal ID",
+        "Status",
+        "Auctions",
+        "Rate",
+        "Spend",
+        "Revenue",
+        "Last Updated",
+        "Type",
+        "Created",
+        "DSP",
+        "CPM",
+        "Seat",
+        "Pacing"
+    ],
+    "rows": [
+        {
+            "name": "Audigent > FiveFifty > SmartPMP CTV > Drive - Max Reach",
+            "dealId": null,
+            "status": "PUBLISHED",
+            "auctions": 0,
+            "rate": 6.0,
+            "spend": 0.0,
+            "revenue": 0.0,
+            "updated": 1605282495896,
+            "type": "AUCTION",
+            "created": 1605282205506,
+            "dsp": "The Trade Desk",
+            "cpm": 0.0,
+            "seat": null,
+            "pacing": "DISABLED"
+        },
+        {
+            "name": "Audigent & Beachfront - CTV Smart PMP - 2 Chainz - So Help Me God",
+            "dealId": null,
+            "status": "PUBLISHED",
+            "auctions": 0,
+            "rate": 5.0,
+            "spend": 0.0,
+            "revenue": 0.0,
+            "updated": null,
+            "type": "AUCTION",
+            "created": 1605305017500,
+            "dsp": "DV360",
+            "cpm": 0.0,
+            "seat": "1767832",
+            "pacing": "DISABLED"
+        }
+    ]
+}
+```
+
+This endpoint retrieves all your deals.
+
+<!--
+<aside class="warning">Inside HTML code blocks like this one, you can't use Markdown, so use <code>&lt;code&gt;</code> blocks to denote code.</aside>
+-->
+
+### HTTP Request
+
+`POST https://access.beachfront.io/api/dealapi/all`
+
+### Body Parameters
+
+Parameter  | Description                            | Example                                                                       |
+---------- | -------------------------------------- | ------------------------------------------------------------------------------|
+pagination | Get the number of records you desire, increment numberOfPages for the next set| <code>{<br>&nbsp;&nbsp;&nbsp;&nbsp;"pagination": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"number": 50,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"numberOfPages": 0<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}</code> |
+range      | One of today, yesterday, last7day, last14day, last30day, month2date, lastmonth, custom, last15day. | month2date |
+startDate  | Starting date | 2021-01-14
+endDate    | Ending date | 2021-06-14
