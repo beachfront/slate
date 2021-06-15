@@ -21,8 +21,6 @@ code_clipboard: true
 
 Welcome to Beachfront Reporting API Documentation!
 
-We have language bindings in Shell, Python, and Java!
-
 # Authentication
 
 Beachfront uses Basic Auth Token(BAT) to allow access to the Reporting API.
@@ -59,10 +57,10 @@ printf '{
 		"dimension": "clvDeal",
 		"operation": "in",
 		"value": [
-			"6059f32792f87150079cd912",
-			"6059f3d792f87150079cd918",
-			"60671c6e92f8716266a96c01",
-			"60671cbc92f8716266a96c04"
+			  "150079cd912",
+        "150079cd918",
+			  "16266a96c01",
+			  "16266a96c04"
 		]
 	}]
 }'| http  --follow --timeout 3600 POST 'http://localhost:8085/api/reportingapi/summary' \
@@ -96,10 +94,10 @@ payload = json.dumps({
       "dimension": "clvDeal",
       "operation": "in",
       "value": [
-        "6059f32792f87150079cd912",
-        "6059f3d792f87150079cd918",
-        "60671c6e92f8716266a96c01",
-        "60671cbc92f8716266a96c04"
+        "150079cd912",
+			  "150079cd918",
+			  "16266a96c01",
+			  "16266a96c04"
       ]
     }
   ]
@@ -118,7 +116,7 @@ print(response.text)
 OkHttpClient client = new OkHttpClient().newBuilder()
   .build();
 MediaType mediaType = MediaType.parse("application/json");
-RequestBody body = RequestBody.create(mediaType, "{\n\t\"range\": \"month2date\",\n\t\"startDate\": \"2021-01-01T21:28:55.187Z\",\n\t\"endDate\": \"2021-06-01T21:28:55.187Z\",\n\t\"dimensions\": [\n\t\t\"day\",\n\t\t\"clvDeal\"\n\t],\n\t\"measures\": [\n\t\t\"revenuegross\",\n\t\t\"resellerRevenue\",\n\t\t\"impressions\",\n\t\t\"adrequests\",\n\t\t\"totalBidPlaced\"\n\t],\n\t\"conditions\": [{\n\t\t\"dimension\": \"clvDeal\",\n\t\t\"operation\": \"in\",\n\t\t\"value\": [\n\t\t\t\"6059f32792f87150079cd912\",\n\t\t\t\"6059f3d792f87150079cd918\",\n\t\t\t\"60671c6e92f8716266a96c01\",\n\t\t\t\"60671cbc92f8716266a96c04\"\n\t\t]\n\t}]\n}");
+RequestBody body = RequestBody.create(mediaType, "{\n\t\"range\": \"month2date\",\n\t\"startDate\": \"2021-01-01T21:28:55.187Z\",\n\t\"endDate\": \"2021-06-01T21:28:55.187Z\",\n\t\"dimensions\": [\n\t\t\"day\",\n\t\t\"clvDeal\"\n\t],\n\t\"measures\": [\n\t\t\"revenuegross\",\n\t\t\"resellerRevenue\",\n\t\t\"impressions\",\n\t\t\"adrequests\",\n\t\t\"totalBidPlaced\"\n\t],\n\t\"conditions\": [{\n\t\t\"dimension\": \"clvDeal\",\n\t\t\"operation\": \"in\",\n\t\t\"value\": [\n\t\t\t\"150079cd912\",\n\t\t\t\"150079cd918\",\n\t\t\t\"16266a96c01\",\n\t\t\t\"16266a96c04\"\n\t\t]\n\t}]\n}");
 Request request = new Request.Builder()
   .url("http://localhost:8085/api/reportingapi/summary")
   .method("POST", body)
@@ -149,14 +147,14 @@ This endpoint retrieves summary data in the format - "Summary, first measure dat
 
 ### Body Parameters
 
-Parameter |  Description
---------- | -----------
-range | One of today, yesterday, last7day, last14day, last30day, month2date, lastmonth, custom, last15day.
-startDate | Starting date
-endDate | Ending date
-dimensions | List of dimensions
-measures | List of measures
-conditions | Filters
+Parameter |  Description | Example
+--------- | ------------ | -------
+range | One of today, yesterday, last7day, last14day, last30day, month2date, lastmonth, custom, last15day. | month2date
+startDate | Starting date | 2021-01-01T21:28:55.187Z
+endDate | Ending date | 2021-06-01T21:28:55.187Z
+dimensions | List of dimensions | [ "day", "clvDeal" ]
+measures | List of measures | ["revenuegross","resellerRevenue","impressions","adrequests","totalBidPlaced"]
+conditions | Filters | [{ "dimension": "clvDeal", "operation": "in", "value": [ "150079cd912", "150079cd918", "16266a96c01", "16266a96c04" ] }]
 
 <!--aside class="success">
 Remember — a happy kitten is an authenticated kitten!
@@ -184,10 +182,10 @@ printf '{
 		"dimension": "clvDeal",
 		"operation": "in",
 		"value": [
-			"6059f32792f87150079cd912",
-			"6059f3d792f87150079cd918",
-			"60671c6e92f8716266a96c01",
-			"60671cbc92f8716266a96c04"
+			"150079cd912",
+			"150079cd918",
+			"16266a96c01",
+			"16266a96c04"
 		]
 	}]
 }'| http  --follow --timeout 3600 POST 'http://localhost:8085/api/reportingapi/detail' \
@@ -220,10 +218,10 @@ payload = json.dumps({
       "dimension": "clvDeal",
       "operation": "in",
       "value": [
-        "6059f32792f87150079cd912",
-        "6059f3d792f87150079cd918",
-        "60671c6e92f8716266a96c01",
-        "60671cbc92f8716266a96c04"
+        "150079cd912",
+			  "150079cd918",
+			  "16266a96c01",
+			  "16266a96c04"
       ]
     }
   ]
@@ -242,7 +240,7 @@ print(data.decode("utf-8"))
 OkHttpClient client = new OkHttpClient().newBuilder()
   .build();
 MediaType mediaType = MediaType.parse("application/json");
-RequestBody body = RequestBody.create(mediaType, "{\n\t\"range\": \"month2date\",\n\t\"startDate\": \"2021-01-01T21:28:55.187Z\",\n\t\"endDate\": \"2021-06-01T21:28:55.187Z\",\n\t\"dimensions\": [\n\t\t\"day\",\n\t\t\"clvDeal\"\n\t],\n\t\"measures\": [\n\t\t\"revenuegross\",\n\t\t\"resellerRevenue\",\n\t\t\"impressions\",\n\t\t\"adrequests\",\n\t\t\"totalBidPlaced\"\n\t],\n\t\"conditions\": [{\n\t\t\"dimension\": \"clvDeal\",\n\t\t\"operation\": \"in\",\n\t\t\"value\": [\n\t\t\t\"6059f32792f87150079cd912\",\n\t\t\t\"6059f3d792f87150079cd918\",\n\t\t\t\"60671c6e92f8716266a96c01\",\n\t\t\t\"60671cbc92f8716266a96c04\"\n\t\t]\n\t}]\n}");
+RequestBody body = RequestBody.create(mediaType, "{\n\t\"range\": \"month2date\",\n\t\"startDate\": \"2021-01-01T21:28:55.187Z\",\n\t\"endDate\": \"2021-06-01T21:28:55.187Z\",\n\t\"dimensions\": [\n\t\t\"day\",\n\t\t\"clvDeal\"\n\t],\n\t\"measures\": [\n\t\t\"revenuegross\",\n\t\t\"resellerRevenue\",\n\t\t\"impressions\",\n\t\t\"adrequests\",\n\t\t\"totalBidPlaced\"\n\t],\n\t\"conditions\": [{\n\t\t\"dimension\": \"clvDeal\",\n\t\t\"operation\": \"in\",\n\t\t\"value\": [\n\t\t\t\"150079cd912\",\n\t\t\t\"150079cd918\",\n\t\t\t\"16266a96c01\",\n\t\t\t\"16266a96c04\"\n\t\t]\n\t}]\n}");
 Request request = new Request.Builder()
   .url("http://localhost:8085/api/reportingapi/detail")
   .method("POST", body)
@@ -347,14 +345,14 @@ This endpoint retrieves detailed data.
 
 ### Body Parameters
 
-Parameter |  Description
---------- | -----------
-range | One of today, yesterday, last7day, last14day, last30day, month2date, lastmonth, custom, last15day.
-startDate | Starting date
-endDate | Ending date
-dimensions | List of dimensions
-measures | List of measures
-conditions | Filters
+Parameter |  Description | Example
+--------- | ------------ | -------
+range | One of today, yesterday, last7day, last14day, last30day, month2date, lastmonth, custom, last15day. | month2date
+startDate | Starting date | 2021-01-01T21:28:55.187Z
+endDate | Ending date | 2021-06-01T21:28:55.187Z
+dimensions | List of dimensions | [ "day", "clvDeal" ]
+measures | List of measures | ["revenuegross","resellerRevenue","impressions","adrequests","totalBidPlaced"]
+conditions | Filters | [{ "dimension": "clvDeal", "operation": "in", "value": [ "150079cd912", "150079cd918", "16266a96c01", "16266a96c04" ] }]
 
 # Media Plan API
 
@@ -557,6 +555,6 @@ This endpoint retrieves all media plans.
 
 ### Body Parameters
 
-Parameter  | Example                                | Description                                                                   |
+Parameter  | Description                            | Example                                                                       |
 ---------- | -------------------------------------- | ------------------------------------------------------------------------------|
-pagination | <code>{<br>&nbsp;&nbsp;&nbsp;&nbsp;"pagination": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"number": 50,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"numberOfPages": 0<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}</code>| Get the number of records you desire, increment numberOfPages for the next set|
+pagination | Get the number of records you desire, increment numberOfPages for the next set| <code>{<br>&nbsp;&nbsp;&nbsp;&nbsp;"pagination": {<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"number": 50,<br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"numberOfPages": 0<br>&nbsp;&nbsp;&nbsp;&nbsp;}<br>}</code> |
