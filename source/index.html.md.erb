@@ -63,7 +63,7 @@ printf '{
 			  "16266a96c04"
 		]
 	}]
-}'| http  --follow --timeout 3600 POST 'http://localhost:8085/api/reportingapi/summary' \
+}'| http  --follow --timeout 3600 POST 'https://access.beachfront.io/api/reportingapi/summary' \
  Authorization:'Basic meowmeow' \
  Content-Type:'application/json'
 ```
@@ -72,7 +72,7 @@ printf '{
 import requests
 import json
 
-url = "http://localhost:8085/api/reportingapi/summary"
+url = "https://access.beachfront.io/api/reportingapi/summary"
 
 payload = json.dumps({
   "range": "month2date",
@@ -118,7 +118,7 @@ OkHttpClient client = new OkHttpClient().newBuilder()
 MediaType mediaType = MediaType.parse("application/json");
 RequestBody body = RequestBody.create(mediaType, "{\n\t\"range\": \"month2date\",\n\t\"startDate\": \"2021-01-01T21:28:55.187Z\",\n\t\"endDate\": \"2021-06-01T21:28:55.187Z\",\n\t\"dimensions\": [\n\t\t\"day\",\n\t\t\"clvDeal\"\n\t],\n\t\"measures\": [\n\t\t\"revenuegross\",\n\t\t\"resellerRevenue\",\n\t\t\"impressions\",\n\t\t\"adrequests\",\n\t\t\"totalBidPlaced\"\n\t],\n\t\"conditions\": [{\n\t\t\"dimension\": \"clvDeal\",\n\t\t\"operation\": \"in\",\n\t\t\"value\": [\n\t\t\t\"150079cd912\",\n\t\t\t\"150079cd918\",\n\t\t\t\"16266a96c01\",\n\t\t\t\"16266a96c04\"\n\t\t]\n\t}]\n}");
 Request request = new Request.Builder()
-  .url("http://localhost:8085/api/reportingapi/summary")
+  .url("https://access.beachfront.io/api/reportingapi/summary")
   .method("POST", body)
   .addHeader("Authorization", "Basic meowmeow")
   .addHeader("Content-Type", "application/json")
@@ -143,7 +143,7 @@ This endpoint retrieves summary data in the format - "Summary, first measure dat
 
 ### HTTP Request
 
-`POST http://localhost:8085/api/reportingapi/summary`
+`POST https://access.beachfront.io/api/reportingapi/summary`
 
 ### Body Parameters
 
@@ -188,7 +188,7 @@ printf '{
 			"16266a96c04"
 		]
 	}]
-}'| http  --follow --timeout 3600 POST 'http://localhost:8085/api/reportingapi/detail' \
+}'| http  --follow --timeout 3600 POST 'https://access.beachfront.io/api/reportingapi/detail' \
  Authorization:'Basic meowmeow' \
  Content-Type:'application/json'
 ```
@@ -242,7 +242,7 @@ OkHttpClient client = new OkHttpClient().newBuilder()
 MediaType mediaType = MediaType.parse("application/json");
 RequestBody body = RequestBody.create(mediaType, "{\n\t\"range\": \"month2date\",\n\t\"startDate\": \"2021-01-01T21:28:55.187Z\",\n\t\"endDate\": \"2021-06-01T21:28:55.187Z\",\n\t\"dimensions\": [\n\t\t\"day\",\n\t\t\"clvDeal\"\n\t],\n\t\"measures\": [\n\t\t\"revenuegross\",\n\t\t\"resellerRevenue\",\n\t\t\"impressions\",\n\t\t\"adrequests\",\n\t\t\"totalBidPlaced\"\n\t],\n\t\"conditions\": [{\n\t\t\"dimension\": \"clvDeal\",\n\t\t\"operation\": \"in\",\n\t\t\"value\": [\n\t\t\t\"150079cd912\",\n\t\t\t\"150079cd918\",\n\t\t\t\"16266a96c01\",\n\t\t\t\"16266a96c04\"\n\t\t]\n\t}]\n}");
 Request request = new Request.Builder()
-  .url("http://localhost:8085/api/reportingapi/detail")
+  .url("https://access.beachfront.io/api/reportingapi/detail")
   .method("POST", body)
   .addHeader("Authorization", "Basic meowmeow")
   .addHeader("Content-Type", "application/json")
@@ -341,7 +341,7 @@ This endpoint retrieves detailed data.
 
 ### HTTP Request
 
-`POST http://localhost:8085/api/reportingapi/detail`
+`POST https://access.beachfront.io/api/reportingapi/detail`
 
 ### Body Parameters
 
@@ -359,14 +359,14 @@ conditions | Filters | [{ "dimension": "clvDeal", "operation": "in", "value": [ 
 ## Get media plan by id
 
 ```shell
-http  --follow --timeout 3600 GET 'http://localhost:8085/api/mediaplanapi/get/60ad0b6e92f8713502143509' \
+http  --follow --timeout 3600 GET 'https://access.beachfront.io/api/mediaplanapi/get/60ad0b6e92f8713502143509' \
  Authorization:'Basic meowmeow'
 ```
 
 ```python
 import requests
 
-url = "http://localhost:8085/api/mediaplanapi/get/60ad0b6e92f8713502143509"
+url = "https://access.beachfront.io/api/mediaplanapi/get/60ad0b6e92f8713502143509"
 
 payload = ""
 headers = {
@@ -382,7 +382,7 @@ print(response.text)
 OkHttpClient client = new OkHttpClient().newBuilder()
   .build();
 Request request = new Request.Builder()
-  .url("http://localhost:8085/api/mediaplanapi/get/60ad0b6e92f8713502143509")
+  .url("https://access.beachfront.io/api/mediaplanapi/get/60ad0b6e92f8713502143509")
   .method("GET", null)
   .addHeader("Authorization", "Basic meowmeow")
   .build();
@@ -456,7 +456,7 @@ This endpoint retrieves media plan data.
 
 ### HTTP Request
 
-`GET http://localhost:8085/api/mediaplanapi/get/60ad0b6e92f8713502143509`
+`GET https://access.beachfront.io/api/mediaplanapi/get/60ad0b6e92f8713502143509`
 
 ### Query Parameters
 
@@ -472,7 +472,7 @@ printf '{
         "number": 50,
         "numberOfPages": 0
     }
-}'| http  --follow --timeout 3600 POST 'http://localhost:8085/api/mediaplanapi/all' \
+}'| http  --follow --timeout 3600 POST 'https://access.beachfront.io/api/mediaplanapi/all' \
  Authorization:'Basic meowmeow' \
  Content-Type:'application/json'
 ```
@@ -481,7 +481,7 @@ printf '{
 import requests
 import json
 
-url = "http://localhost:8085/api/mediaplanapi/all"
+url = "https://access.beachfront.io/api/mediaplanapi/all"
 
 payload = json.dumps({
   "pagination": {
@@ -505,7 +505,7 @@ OkHttpClient client = new OkHttpClient().newBuilder()
 MediaType mediaType = MediaType.parse("application/json");
 RequestBody body = RequestBody.create(mediaType, "{\n    \"pagination\": {\n        \"number\": 50,\n        \"numberOfPages\": 0\n    }\n}");
 Request request = new Request.Builder()
-  .url("http://localhost:8085/api/mediaplanapi/all")
+  .url("https://access.beachfront.io/api/mediaplanapi/all")
   .method("POST", body)
   .addHeader("Authorization", "Basic QlJuYzNnR0hEZVEzTWgwZjpkeUJPMlRaSDFvUUNDM0VnSU55WTQxOFFjclFFbFp0Mw==")
   .addHeader("Content-Type", "application/json")
@@ -551,7 +551,7 @@ This endpoint retrieves all media plans.
 
 ### HTTP Request
 
-`POST http://localhost:8085/api/mediaplanapi/all`
+`POST https://access.beachfront.io/api/mediaplanapi/all`
 
 ### Body Parameters
 
